@@ -5,4 +5,15 @@
     <string name="pass">Ingrese su Contraseña</string>
     <string name="iniciar">Iniciar Sesión</string>
     <string name="registrarse">Registrarse</string>
+    <string name="tvRegistro">Completar los campos:</string>
+    <string name="tvNombre">Nombre:</string>
+    <string name="edtNombreHide">Ingresa tu nombre:</string>
+    <string name="tvUsuario">Usuario:</string>
+    <string name="edtUsuarioHide">Ingresa tu usuario:</string>
+    <string name="tvEmail">Email:</string>
+    <string name="edtEmailHide">Ingresa tu Email:</string>
+    <string name="tvContrasenia">Contraseña:</string>
+    <string name="edtContraseniaHide">Ingresa tu contraseña:</string>
+    <string name="btnRegistrarme">Registrarme</string>
+
 </resources>
