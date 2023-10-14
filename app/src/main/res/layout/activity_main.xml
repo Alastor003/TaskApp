@@ -2,73 +2,82 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@color/fondo"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="396dp"
-            android:contentDescription="@string/logo"
-            android:scaleX="0.5"
-            android:scaleY="0.5"
-            app:srcCompat="@drawable/task" />
-
-        <EditText
-            android:id="@+id/user"
+            android:id="@+id/logo"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:autofillHints=""
-            android:background="@color/white"
-            android:ems="10"
-            android:hint="@string/user"
-            android:inputType="text"
-            app:layout_constraintHorizontal_bias="0.5" />
+            android:layout_height="300dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginBottom="20dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/taskapp"
+            app:srcCompat="@drawable/taskapp" />
 
-        <EditText
-            android:id="@+id/pass"
+        <LinearLayout
+            android:id="@+id/main"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:autofillHints=""
-            android:background="@color/white"
-            android:ems="10"
-            android:hint="@string/pass"
-            android:inputType="textPassword"
-            app:layout_constraintHorizontal_bias="0.5" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/iniciar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/iniciar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pass"
-            app:layout_constraintVertical_bias="0.5" />
+            <EditText
+                android:id="@+id/userText"
+                android:layout_width="270dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:ems="20"
+                android:gravity="center_horizontal"
+                android:hint="@string/user"
+                android:textColorHint="@color/editext"
+                android:inputType="text"
+                app:backgroundTint="@color/editext"/>
 
-        <Button
-            android:id="@+id/registrar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/registrarse"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iniciar"
-            app:layout_constraintVertical_bias="0.5" />
+            <EditText
+                android:id="@+id/pass"
+                android:layout_width="270dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:hint="@string/pass"
+                android:textColorHint="@color/editext"
+                android:inputType="textPassword"
+                app:backgroundTint="@color/editext"/>
+
+            <Button
+                android:id="@+id/login"
+                android:layout_width="170dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/custom_button"
+                android:textColor="@color/white"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/iniciar" />
+
+            <Button
+                android:id="@+id/registrar"
+                android:layout_width="170dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/custom_button"
+                android:textColor="@color/white"
+                android:text="@string/registrarse" />
+        </LinearLayout>
 
     </LinearLayout>
 
