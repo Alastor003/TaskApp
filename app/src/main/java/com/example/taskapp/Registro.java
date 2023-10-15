@@ -49,7 +49,9 @@ public class Registro extends AppCompatActivity {
                 String email = edtEmail.getText().toString();
                 String contrasenia = edtContrasenia.getText().toString();
 
-                if (usuarioExiste(usuario, email)) {
+                if (nombre.isEmpty() || usuario.isEmpty() || email.isEmpty() || contrasenia.isEmpty()) {
+                    Toast.makeText(Registro.this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
+                } else if (usuarioExiste(usuario, email)) {
                     Toast.makeText(Registro.this, "Usuario o correo electrónico ya existen", Toast.LENGTH_SHORT).show();
                 } else {
                     guardarDatosUsuario(nombre, usuario, email, contrasenia);
