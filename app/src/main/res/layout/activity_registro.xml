@@ -7,24 +7,55 @@
     android:background="@color/fondo"
     tools:context=".Registro">
 
-    <Button
-        android:id="@+id/btnRegistrar"
+    <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="9dp"
+        android:scaleType="fitStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtContrasenia"
+        app:srcCompat="@drawable/registro" />
+
+    <Button
+        android:id="@+id/btnRegistrar"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/custom_button"
+        android:gravity="center_horizontal|center_vertical"
         android:text="@string/btnRegistrarme"
-        app:layout_constraintEnd_toEndOf="@+id/edtContrasenia"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtContrasenia" />
+
+    <Button
+        android:id="@+id/btnCancelar"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/custom_button"
+        android:text="@string/btnCancelar"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegistrar"
+        app:layout_constraintVertical_bias="0.19" />
 
     <TextView
         android:id="@+id/tvNombre"
-        android:layout_width="59dp"
-        android:layout_height="19dp"
+        android:layout_width="65dp"
+        android:layout_height="21dp"
         android:layout_marginStart="67dp"
         android:layout_marginTop="74dp"
         android:layout_marginBottom="73dp"
         android:text="@string/tvNombre"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/tvUsuario"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvRegistro" />
@@ -37,6 +68,9 @@
         android:ems="10"
         android:hint="@string/edtNombreHide"
         android:inputType="text"
+        android:minHeight="48dp"
+        android:textColorHint="@color/editext"
+        app:backgroundTint="@color/editext"
         app:layout_constraintStart_toStartOf="@+id/tvNombre"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,6 +81,8 @@
         android:layout_marginStart="2dp"
         android:layout_marginTop="20dp"
         android:text="@string/tvUsuario"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/edtNombre"
         app:layout_constraintTop_toBottomOf="@+id/edtNombre" />
 
@@ -54,9 +90,14 @@
         android:id="@+id/tvRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="7dp"
         android:layout_marginTop="55dp"
+        android:layout_marginEnd="133dp"
+        android:fontFamily="sans-serif"
         android:text="@string/tvRegistro"
+        android:textColor="@color/white"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvNombre"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,6 +110,9 @@
         android:ems="10"
         android:hint="@string/edtUsuarioHide"
         android:inputType="text"
+        android:minHeight="48dp"
+        android:textColorHint="@color/editext"
+        app:backgroundTint="@color/editext"
         app:layout_constraintStart_toStartOf="@+id/tvUsuario"
         app:layout_constraintTop_toBottomOf="@+id/tvUsuario" />
 
@@ -79,6 +123,8 @@
         android:layout_marginStart="2dp"
         android:layout_marginBottom="8dp"
         android:text="@string/tvEmail"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/edtEmail"
         app:layout_constraintStart_toStartOf="@+id/edtEmail" />
 
@@ -91,6 +137,10 @@
         android:ems="10"
         android:hint="@string/edtEmailHide"
         android:inputType="text"
+
+        android:minHeight="48dp"
+        android:textColorHint="@color/editext"
+        app:backgroundTint="@color/editext"
         app:layout_constraintEnd_toEndOf="@+id/edtUsuario"
         app:layout_constraintTop_toBottomOf="@+id/edtUsuario" />
 
@@ -102,6 +152,9 @@
         android:ems="10"
         android:hint="@string/edtContraseniaHide"
         android:inputType="text"
+        android:minHeight="48dp"
+        android:textColorHint="@color/editext"
+        app:backgroundTint="@color/editext"
         app:layout_constraintStart_toStartOf="@+id/tvContrasenia"
         app:layout_constraintTop_toBottomOf="@+id/tvContrasenia" />
 
@@ -111,6 +164,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/tvContrasenia"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/edtEmail"
         app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
