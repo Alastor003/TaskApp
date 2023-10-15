@@ -17,9 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Casteo
         btnRegistro = findViewById(R.id.registrar);
-
 
         btnRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,6 +26,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(registro);
             }
         });
-
     }
 }
