@@ -17,12 +17,23 @@
         app:layout_constraintTop_toBottomOf="@+id/edtContrasenia"
         app:srcCompat="@drawable/registro" />
 
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="83dp"
+        android:layout_height="65dp"
+        android:background="@color/fondo"
+        android:contentDescription="@string/btnCancelar"
+        android:scaleType="fitEnd"
+        app:layout_constraintBottom_toTopOf="@+id/tvRegistro"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/back" />
+
     <Button
         android:id="@+id/btnRegistrar"
         android:layout_width="170dp"
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/custom_button"
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/btnRegistrarme"
@@ -30,21 +41,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtContrasenia" />
-
-    <Button
-        android:id="@+id/btnCancelar"
-        android:layout_width="170dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/custom_button"
-        android:text="@string/btnCancelar"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRegistrar"
-        app:layout_constraintVertical_bias="0.19" />
 
     <TextView
         android:id="@+id/tvNombre"
@@ -90,7 +86,7 @@
         android:id="@+id/tvRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="133dp"
         android:fontFamily="sans-serif"
         android:text="@string/tvRegistro"
@@ -168,7 +164,6 @@
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/edtEmail"
         app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
