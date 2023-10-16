@@ -16,5 +16,9 @@
     <string name="edtContraseniaHide">Ingresa tu Contraseña:</string>
     <string name="btnRegistrarme">Registrarme</string>
     <string name="btnCancelar">Cancelar</string>
+    <string name="tvTitulo">Añada un Tíulo:</string>
+    <string name="tvDescripcion">Descripción de la Tarea:</string>
+    <string name="edtDescripcion">Explique su tarea...</string>
+    <string name="edtTitle">Título</string>
 
 </resources>
