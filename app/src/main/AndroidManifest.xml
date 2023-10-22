@@ -16,7 +16,7 @@
             android:name=".CrearTarea"
             android:exported="false" />
         <activity
-            android:name=".Tarea"
+            android:name=".TareaView"
             android:exported="false" />
         <activity
             android:name=".Registro"

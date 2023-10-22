@@ -44,8 +44,10 @@ public class MainActivity extends AppCompatActivity {
                 String contrasenia = edtPass.getText().toString();
 
                 if (iniciarSesion(usuario, contrasenia)) {
-                    Toast.makeText(MainActivity.this, "Se inicio sesión con éxito.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(MainActivity.this, Tarea.class);
+                    String nombreUsuario = obtenerNombreUsuario(usuario); // Obtiene el nombre de usuario
+
+                    Intent intent = new Intent(MainActivity.this, TareaView.class);
+                    intent.putExtra("nombre_usuario", nombreUsuario); // Envía el nombre de usuario a la actividad TareaView
                     startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, "Inicio de sesión fallido.", Toast.LENGTH_SHORT).show();
@@ -71,6 +73,24 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return false;
+    }
+
+    private String obtenerNombreUsuario(String usuario) {
+        File file = new File(getFilesDir(), "usuarios.csv");
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] userData = line.split(",");
+                if (userData.length >= 4 && usuario.equals(userData[1])) {
+                    return userData[0];
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
