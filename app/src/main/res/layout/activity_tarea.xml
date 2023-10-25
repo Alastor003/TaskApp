@@ -20,7 +20,7 @@
         <ImageButton
             android:id="@+id/btnBack"
             android:layout_width="83dp"
-            android:layout_height="65dp"
+            android:layout_height="55dp"
             android:background="@color/fondo"
             android:contentDescription="@string/btnCancelar"
             android:scaleType="fitEnd"
