@@ -1,45 +1,48 @@
 package com.example.taskapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.widget.ImageButton;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Registro extends AppCompatActivity {
+    private static final String TAG = "RegistroActivity";
+
     EditText edtNombre, edtUsuario, edtEmail, edtContrasenia;
     Button btnRegistrar;
-    ImageButton btnBack;
+    FirebaseAuth mAuth;
+    FirebaseFirestore db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
+
+        // Inicializar Firebase Auth y Firestore
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         edtNombre = findViewById(R.id.edtNombre);
         edtUsuario = findViewById(R.id.edtUsuario);
         edtEmail = findViewById(R.id.edtEmail);
         edtContrasenia = findViewById(R.id.edtContrasenia);
         btnRegistrar = findViewById(R.id.btnRegistrar);
-        btnBack = findViewById(R.id.btnBack);
-
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
 
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,48 +54,54 @@ public class Registro extends AppCompatActivity {
 
                 if (nombre.isEmpty() || usuario.isEmpty() || email.isEmpty() || contrasenia.isEmpty()) {
                     Toast.makeText(Registro.this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
-                } else if (usuarioExiste(usuario, email)) {
-                    Toast.makeText(Registro.this, "Usuario o correo electrónico ya existen", Toast.LENGTH_SHORT).show();
                 } else {
-                    guardarDatosUsuario(nombre, usuario, email, contrasenia);
-
-                    Intent intent = new Intent(Registro.this, MainActivity.class);
-                    startActivity(intent);
-                    Toast.makeText(Registro.this, "Registro completo", Toast.LENGTH_SHORT).show();
+                    registrarUsuario(email, contrasenia, nombre, usuario);
                 }
             }
         });
     }
 
-    private void guardarDatosUsuario(String nombre, String usuario, String email, String contrasenia) {
-        File file = new File(getFilesDir(), "usuarios.csv");
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true)); // true para agregar al archivo existente
+    private void registrarUsuario(String email, String contrasenia, final String nombre, final String usuario) {
+        mAuth.createUserWithEmailAndPassword(email, contrasenia)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            guardarDatosUsuarioFirestore(user.getUid(), nombre, usuario, email);
 
-            String userData = nombre + "," + usuario + "," + email + "," + contrasenia;
-            writer.write(userData);
-            writer.newLine();
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                            // Registro exitoso, dirigir al usuario al MainActivity
+                            Intent intent = new Intent(Registro.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(Registro.this, "Error al registrarse.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
-    private boolean usuarioExiste(String usuario, String email) {
-        File file = new File(getFilesDir(), "usuarios.csv");
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] userData = line.split(",");
-                if (userData.length >= 3 && (usuario.equals(userData[1]) || email.equals(userData[2]))) {
-                    return true;
-                }
-            }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
+    private void guardarDatosUsuarioFirestore(String userId, String nombre, String usuario, String email) {
+        Map<String, Object> usuarioMap = new HashMap<>();
+        usuarioMap.put("nombre", nombre);
+        usuarioMap.put("usuario", usuario);
+        usuarioMap.put("email", email);
+
+        // Agregar datos del usuario a la colección "usuarios" en Firestore
+        db.collection("usuarios")
+                .document(userId)
+                .set(usuarioMap)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(Registro.this, "Se registro usuario con éxito", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.e(TAG, "Error al guardar datos en Firestore", task.getException());
+                            Toast.makeText(Registro.this, "Error al registrar usuario", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }
