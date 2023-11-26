@@ -1,28 +1,23 @@
 package com.example.taskapp;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import com.google.firebase.firestore.ServerTimestamp;
+import java.util.Date;
 
-public class Tarea implements Parcelable {
-    private String titulo;
+public class Tarea {
+    private String  status;
     private String descripcion;
     private String hora;
-    private String status;
+    private String titulo;
 
+    public Tarea() {
+        // Constructor vacío necesario para Firestore
+    }
 
-    public Tarea(String titulo, String descripcion, String hora) {
+    public Tarea(String titulo, String descripcion, String hora, String status) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.hora = hora;
-        this.status = "En espera";
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+        this.status = status;
     }
 
     public String getDescripcion() {
@@ -41,43 +36,15 @@ public class Tarea implements Parcelable {
         this.hora = hora;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    protected Tarea(Parcel in) {
-        titulo = in.readString();
-        descripcion = in.readString();
-        hora = in.readString();
-        status = in.readString();
-    }
-
-    public static final Creator<Tarea> CREATOR = new Creator<Tarea>() {
-        @Override
-        public Tarea createFromParcel(Parcel in) {
-            return new Tarea(in);
-        }
-
-        @Override
-        public Tarea[] newArray(int size) {
-            return new Tarea[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(titulo);
-        dest.writeString(descripcion);
-        dest.writeString(hora);
-        dest.writeString(status);
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 }

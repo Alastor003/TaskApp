@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TaskApp</string>
     <string name="logo">Logo</string>
-    <string name="user">Ingrese nombre de Usuario</string>
+    <string name="user">Ingrese su Email</string>
     <string name="pass">Ingrese su Contraseña</string>
     <string name="iniciar">Iniciar Sesión</string>
     <string name="registrarse">Registrarse</string>
