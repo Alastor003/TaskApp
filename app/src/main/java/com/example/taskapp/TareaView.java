@@ -52,6 +52,9 @@ public class TareaView extends AppCompatActivity {
         tareaAdapter = new TareaAdapter(options);
         recyclerView.setAdapter(tareaAdapter);
 
+        tareaAdapter = new TareaAdapter(options);
+        recyclerView.setAdapter(tareaAdapter);
+
         if (nombreUsuario != null) {
             Toast.makeText(this, "Bienvenido, " + nombreUsuario, Toast.LENGTH_SHORT).show();
         }
@@ -69,7 +72,15 @@ public class TareaView extends AppCompatActivity {
         ImageButton btnBack = findViewById(R.id.btnBack);
         Button btnNuevaTarea = findViewById(R.id.btnNuevaTarea);
 
-        btnBack.setOnClickListener(view -> finish());
+        btnBack.setOnClickListener(view -> {
+            FirebaseAuth.getInstance().signOut();
+
+            Toast.makeText(this, "Sesión cerrada con éxito", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(TareaView.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
 
         btnNuevaTarea.setOnClickListener(view -> {
             Intent intent = new Intent(TareaView.this, CrearTarea.class);
@@ -96,5 +107,10 @@ public class TareaView extends AppCompatActivity {
         if (requestCode == CREAR_TAREA_REQUEST && resultCode == RESULT_OK) {
             Toast.makeText(this, "Nueva tarea creada con éxito", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void eliminarTarea(int position) {
+        tareaAdapter.eliminarTarea(position);
+        Toast.makeText(this, "Tarea eliminada con éxito", Toast.LENGTH_SHORT).show();
     }
 }

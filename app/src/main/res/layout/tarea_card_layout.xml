@@ -19,7 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="6dp">
+            android:padding="6dp"
+            tools:ignore="ExtraText">
 
             <ImageView
                 android:id="@+id/iconTarea"
@@ -54,7 +55,7 @@
                     android:textStyle="bold"/>
                 <TextView
                     android:id="@+id/edtDescripcionTarea"
-                    android:layout_width="220dp"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:text="mucho texto lalalala soy mucho texto para probar noma xd"
                     android:textSize="16sp"/>
@@ -72,14 +73,26 @@
                 android:id="@+id/edtStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_below="@+id/btnEliminarTarea"
+                android:layout_alignParentEnd="true"
                 android:layout_marginEnd="6dp"
-                android:layout_marginRight="6dp"
+                android:layout_marginTop="18dp"
                 android:text="Activo"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"/>
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnEliminarTarea"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/btn_redondeado"
+                android:text="X"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
         </RelativeLayout>
     </LinearLayout>
 
