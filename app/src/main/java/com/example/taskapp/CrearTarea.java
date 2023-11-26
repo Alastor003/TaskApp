@@ -2,24 +2,31 @@ package com.example.taskapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CrearTarea extends AppCompatActivity {
 
     EditText edtTitulo, edtDescripcion, edtHora;
     Button btnGuardar, btnVolverMenu;
+    FirebaseFirestore db;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_tarea);
+
+        db = FirebaseFirestore.getInstance();
 
         edtTitulo = findViewById(R.id.edtTitulo);
         edtDescripcion = findViewById(R.id.edtDescripcion);
@@ -41,16 +48,32 @@ public class CrearTarea extends AppCompatActivity {
                 String descripcion = edtDescripcion.getText().toString();
                 String hora = edtHora.getText().toString();
 
-                hora = hora.trim() + " HS";
-
-                Tarea nuevaTarea = new Tarea(titulo, descripcion, hora);
-
-                Intent intent = new Intent();
-                intent.putExtra("nueva_tarea", (Parcelable) nuevaTarea);
-                setResult(RESULT_OK, intent);
+                guardarTareaEnFirestore(titulo, descripcion, hora);
 
                 finish();
             }
         });
+    }
+
+    private void guardarTareaEnFirestore(String titulo, String descripcion, String hora) {
+        Map<String, Object> tarea = new HashMap<>();
+        tarea.put("titulo", titulo);
+        tarea.put("descripcion", descripcion);
+        tarea.put("hora", hora);
+        tarea.put("userId", FirebaseAuth.getInstance().getCurrentUser().getUid()); // ID del usuario actual
+        tarea.put("status", "En espera");
+
+        db.collection("tareas")
+                .add(tarea)
+                .addOnSuccessListener(documentReference -> {
+                    mostrarMensaje("Tarea creada con éxito");
+                })
+                .addOnFailureListener(e -> {
+                    mostrarMensaje("Error al crear la tarea. Por favor, inténtalo de nuevo.");
+                });
+    }
+
+    private void mostrarMensaje(String mensaje) {
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,96 +1,114 @@
 package com.example.taskapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Referencias
+    // Referencias
     EditText edtUser, edtPass;
     Button btnRegistro, btnLogin;
+    FirebaseAuth mAuth;
+    FirebaseFirestore db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         edtUser = findViewById(R.id.edtUser);
         edtPass = findViewById(R.id.edtPass);
         btnLogin = findViewById(R.id.btnLogin);
         btnRegistro = findViewById(R.id.registrar);
 
-      btnRegistro.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              Intent registro = new Intent(MainActivity.this, Registro.class);
-              startActivity(registro);
-          }
-      });
+        btnRegistro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirRegistro();
+            }
+        });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String usuario = edtUser.getText().toString();
-                String contrasenia = edtPass.getText().toString();
-
-                if (iniciarSesion(usuario, contrasenia)) {
-                    String nombreUsuario = obtenerNombreUsuario(usuario); // Obtiene el nombre de usuario
-
-                    Intent intent = new Intent(MainActivity.this, TareaView.class);
-                    intent.putExtra("nombre_usuario", nombreUsuario); // Envía el nombre de usuario a la actividad TareaView
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(MainActivity.this, "Inicio de sesión fallido.", Toast.LENGTH_SHORT).show();
-                }
+                iniciarSesion();
             }
         });
     }
 
-    private boolean iniciarSesion(String usuario, String contrasenia) {
-
-        File file = new File(getFilesDir(), "usuarios.csv");
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] userData = line.split(",");
-                if (userData.length >= 4 && usuario.equals(userData[1]) && contrasenia.equals(userData[3])) {
-                    return true;
-                }
-            }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
+    private void abrirRegistro() {
+        Intent registro = new Intent(MainActivity.this, Registro.class);
+        startActivity(registro);
     }
 
-    private String obtenerNombreUsuario(String usuario) {
-        File file = new File(getFilesDir(), "usuarios.csv");
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] userData = line.split(",");
-                if (userData.length >= 4 && usuario.equals(userData[1])) {
-                    return userData[0];
-                }
-            }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+    private void iniciarSesion() {
+        String usuario = edtUser.getText().toString();
+        String contrasenia = edtPass.getText().toString();
+
+        if (!usuario.isEmpty() && !contrasenia.isEmpty()) {
+            iniciarSesionFirebase(usuario, contrasenia);
+        } else {
+            mostrarMensaje("Ingresa usuario y contraseña.");
         }
-        return null;
     }
 
+    private void iniciarSesionFirebase(String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener() {
+                    @Override
+                    public void onComplete(Task task) {
+                        if (task.isSuccessful()) {
+                            obtenerNombreUsuario(email);
+                        } else {
+                            mostrarMensaje("Inicio de sesión fallido.");
+                        }
+                    }
+                });
+    }
+
+    private void obtenerNombreUsuario(String email) {
+        db.collection("usuarios")
+                .whereEqualTo("email", email)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful() && task.getResult() != null && !task.getResult().getDocuments().isEmpty()) {
+                            DocumentSnapshot document = task.getResult().getDocuments().get(0);
+                            String nombreUsuario = document.getString("nombre");
+                            redirigirATareaView(nombreUsuario);
+                        } else {
+                            mostrarMensaje("Error al obtener información del usuario.");
+                        }
+                    }
+                });
+    }
+
+    private void redirigirATareaView(String nombreUsuario) {
+        Intent intent = new Intent(MainActivity.this, TareaView.class);
+        intent.putExtra("nombre_usuario", nombreUsuario);
+        startActivity(intent);
+    }
+
+    private void mostrarMensaje(String mensaje) {
+        Toast.makeText(MainActivity.this, mensaje, Toast.LENGTH_SHORT).show();
+    }
 }

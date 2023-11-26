@@ -8,13 +8,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public class TareaAdapter extends RecyclerView.Adapter<TareaAdapter.TareaViewHolder> {
-    private List<Tarea> listaDeTareas;
+public class TareaAdapter extends FirestoreRecyclerAdapter<Tarea, TareaAdapter.TareaViewHolder> {
 
-    public TareaAdapter(List<Tarea> listaDeTareas) {
-        this.listaDeTareas = listaDeTareas;
+    public TareaAdapter(@NonNull FirestoreRecyclerOptions<Tarea> options) {
+        super(options);
     }
 
     @NonNull
@@ -25,34 +25,8 @@ public class TareaAdapter extends RecyclerView.Adapter<TareaAdapter.TareaViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TareaViewHolder holder, int position) {
-        Tarea tarea = listaDeTareas.get(position);
-        holder.nombreTarea.setText(tarea.getTitulo());
-        holder.descripcionTarea.setText(tarea.getDescripcion());
-        holder.horaTarea.setText(tarea.getHora());
-        holder.statusTarea.setText(tarea.getStatus());
-
-        holder.statusTarea.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int adapterPosition = holder.getAdapterPosition();
-
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    Tarea tarea = listaDeTareas.get(adapterPosition);
-
-                    String estadoActual = tarea.getStatus();
-                    String nuevoEstado = obtenerSiguienteEstado(estadoActual);
-                    tarea.setStatus(nuevoEstado);
-
-                    holder.statusTarea.setText(nuevoEstado);
-                }
-            }
-        });
-    }
-
-    @Override
-    public int getItemCount() {
-        return listaDeTareas.size();
+    protected void onBindViewHolder(@NonNull TareaViewHolder holder, int position, @NonNull Tarea tarea) {
+        holder.bind(tarea);
     }
 
     public class TareaViewHolder extends RecyclerView.ViewHolder {
@@ -68,15 +42,35 @@ public class TareaAdapter extends RecyclerView.Adapter<TareaAdapter.TareaViewHol
             horaTarea = itemView.findViewById(R.id.edtHoraTarea);
             statusTarea = itemView.findViewById(R.id.edtStatus);
         }
+
+        public void bind(Tarea tarea) {
+            nombreTarea.setText(tarea.getTitulo());
+            descripcionTarea.setText(tarea.getDescripcion());
+            horaTarea.setText(tarea.getHora());
+            statusTarea.setText(tarea.getStatus());
+
+            itemView.setOnClickListener(view -> {
+                String nuevoEstado = obtenerNuevoEstado(tarea.getStatus());
+
+                cambiarEstadoTarea(getAdapterPosition(), nuevoEstado);
+            });
+        }
     }
 
-    private String obtenerSiguienteEstado(String estadoActual) {
-        if ("En espera".equals(estadoActual)) {
-            return "En Curso";
-        } else if ("En Curso".equals(estadoActual)) {
-            return "Completado";
-        } else {
-            return "En espera";
+    private String obtenerNuevoEstado(String estadoActual) {
+        switch (estadoActual) {
+            case "Activo":
+                return "En espera";
+            case "En espera":
+                return "Terminado";
+            case "Terminado":
+                return "Activo";
+            default:
+                return "Activo";
         }
+    }
+
+    private void cambiarEstadoTarea(int position, String nuevoEstado) {
+        getSnapshots().getSnapshot(position).getReference().update("status", nuevoEstado);
     }
 }
