@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -110,5 +112,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void mostrarMensaje(String mensaje) {
         Toast.makeText(MainActivity.this, mensaje, Toast.LENGTH_SHORT).show();
+    }
+
+
+    public  void  download(View v)
+    {
+        ImageView imageView = findViewById(R.id.imageView);
+        if (imageView.getVisibility() == View.INVISIBLE) {
+            imageView.setVisibility(View.VISIBLE);
+        } else {
+            imageView.setVisibility(View.INVISIBLE);
+        }
+        ImageDownloader descarga = new ImageDownloader(imageView);
+        descarga.execute("https://scontent.fepa2-1.fna.fbcdn.net/v/t39.30808-6/405251742_7673753482641159_1720167608337291579_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=3635dc&_nc_ohc=lAk3tujHHJsAX-buVqX&_nc_ht=scontent.fepa2-1.fna&cb_e2o_trans=t&oh=00_AfAVcX33uj07QQCdZ86SH9nAaQd8_Wcn6wFmCTFmvvaN6A&oe=656BB993");
     }
 }
