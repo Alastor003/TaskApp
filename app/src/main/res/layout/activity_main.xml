@@ -17,9 +17,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            app:srcCompat="@drawable/ic_launcher_background" />
+
+        <ImageView
             android:id="@+id/logo"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="217dp"
             android:layout_marginTop="45dp"
             android:layout_marginBottom="20dp"
             android:scaleType="centerInside"

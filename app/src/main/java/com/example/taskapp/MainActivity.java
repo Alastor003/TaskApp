@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -116,7 +117,8 @@ public class MainActivity extends AppCompatActivity {
 
     public  void  download(View v)
     {
-        ImageDownloader descarga = new ImageDownloader();
+        ImageView imageView = findViewById(R.id.imageView);
+        ImageDownloader descarga = new ImageDownloader(imageView);
         descarga.execute("https://www.muycomputer.com/wp-content/uploads/2019/12/android.jpg");
     }
 }
