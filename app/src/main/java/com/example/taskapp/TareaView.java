@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -26,6 +27,7 @@ public class TareaView extends AppCompatActivity {
     private TareaAdapter tareaAdapter;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+
     private static final int CREAR_TAREA_REQUEST = 1;
 
 
@@ -62,8 +64,24 @@ public class TareaView extends AppCompatActivity {
         userLogin = findViewById(R.id.userLogin);
         userDate = findViewById(R.id.userDate);
 
-        // Mostrar el nombre de usuario obtenido desde el intent
-        userLogin.setText("Usuario: " + nombreUsuario);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+            String userEmail = user.getEmail();
+            db.collection("usuarios")
+                    .whereEqualTo("email", userEmail)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                            String nombre = task.getResult().getDocuments().get(0).getString("nombre");
+                            if (nombre != null) {
+                                userLogin.setText("Usuario: " + nombre);
+                            }
+                        } else {
+                            Toast.makeText(this, "No se encontró el usuario en la base de datos", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String fechaActual = dateFormat.format(new Date());
