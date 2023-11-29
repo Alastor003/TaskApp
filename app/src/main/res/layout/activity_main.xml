@@ -80,6 +80,17 @@
                 android:textColor="@color/white"
                 android:text="@string/registrarse" />
 
+            <Button
+                android:onClick="download"
+                android:id="@+id/btnDescargar"
+                android:layout_width="170dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/custom_button"
+                android:text="@string/btnDescargar"
+                android:textColor="@color/white" />
+
         </LinearLayout>
 
     </LinearLayout>

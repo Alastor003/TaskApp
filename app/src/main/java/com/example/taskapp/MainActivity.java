@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -110,5 +111,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void mostrarMensaje(String mensaje) {
         Toast.makeText(MainActivity.this, mensaje, Toast.LENGTH_SHORT).show();
+    }
+
+
+    public  void  download(View v)
+    {
+        ImageDownloader descarga = new ImageDownloader();
+        descarga.execute("https://www.muycomputer.com/wp-content/uploads/2019/12/android.jpg");
     }
 }
