@@ -19,9 +19,11 @@
     <string name="edtContraseniaHide">Ingresa tu Contraseña:</string>
     <string name="edtDescripcion">Explique su tarea...</string>
     <string name="edtTitle">Título</string>
+    <string name="edtConecFallida">Falló la Conexión. Intente más tarde...</string>
     <string name="btnRegistrarme">Registrarme</string>
     <string name="btnCancelar">Cancelar</string>
     <string name="btnAniadir">+Crear Tarea</string>
+    <string name="btnReintentarConex">Reintentar</string>
 
 
 </resources>
