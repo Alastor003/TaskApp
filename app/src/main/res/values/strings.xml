@@ -13,6 +13,7 @@
     <string name="tvContrasenia">Contraseña:</string>
     <string name="tvTitulo">Asigne un Título:</string>
     <string name="tvDescripcion">Descripción de la Tarea:</string>
+    <string name="tvClima">El clima actual es BS.AS es: </string>
     <string name="edtNombreHide">Ingresa tu Nombre:</string>
     <string name="edtUsuarioHide">Ingresa tu Usuario:</string>
     <string name="edtEmailHide">Ingresa tu Email:</string>
@@ -24,6 +25,7 @@
     <string name="btnCancelar">Cancelar</string>
     <string name="btnAniadir">+Crear Tarea</string>
     <string name="btnReintentarConex">Reintentar</string>
+
 
 
 </resources>
