@@ -66,17 +66,6 @@ public class GetClima extends AsyncTask<String, Integer, String> {
             double temperaturaKelvin = respuesta.main.temp;
 
             //response = respuesta.sys.country;
-            /*
-            JSONObject weather = new JSONObject(response);
-            JSONObject mainObject = weather.getJSONObject("main");
-            double temperature = mainObject.getDouble("temp") - (273.15);
-            int temperatureInteger = (int) Math.round(temperature);*/
-
-            //JSONArray main = (JSONArray) weather.get("main");
-            //JSONObject weather0 = (JSONObject) main.get(0);
-            //String nameMain0 = (String) weather0.get("main");
-
-            //response = String.valueOf(temperatureInteger) + '°';
 
         } catch (IOException e) //| JSONException
         {
@@ -85,44 +74,26 @@ public class GetClima extends AsyncTask<String, Integer, String> {
         }
         return response;
     }
-
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         Log.i("Probando url", s);
 
         try {
-            // Parsea la respuesta JSON
             JSONObject jsonResponse = new JSONObject(s);
-
-            // Obtiene el valor de 'main>temp'
             JSONObject mainObject = jsonResponse.getJSONObject("main");
             double temperaturaKelvin = mainObject.getDouble("temp");
 
-            // Convierte de Kelvin a Celsius (o Fahrenheit, según sea necesario)
-            //double temperaturaCelsius = temperaturaKelvin - 273.15;
             int tempCelcius = (int) Math.round(temperaturaKelvin - 273.15);
-
-            // Obtiene el valor de 'sys>country'
             JSONObject sysObject = jsonResponse.getJSONObject("sys");
             String pais = sysObject.getString("country");
+            String resultado = "Temperatura actual en " + pais + " es de " + tempCelcius + "°C.";
 
-            // Ahora tienes 'temperaturaCelsius' y 'pais' disponibles
 
-            // Si deseas mostrar estos valores en un TextView o EditText:
-            String resultado = "Temperatura: " + tempCelcius + "°C, País: " + pais;
-
-            // Puedes mostrar el resultado en un TextView
-            // textViewResultado.setText(resultado);
-            //EditText e = null;
-            //e.findViewById(R.id.edtClima);
+            //EditText e = ((Tarea) context).findViewById(R.id.edtClima);
             //e.setText(resultado);
 
 
-            // O en un EditText
-            // editTextResultado.setText(resultado);
-
-            // Puedes mostrar el resultado en el Log para verificar
             Log.i("Resultado API Clima", resultado);
 
         } catch (JSONException e) {

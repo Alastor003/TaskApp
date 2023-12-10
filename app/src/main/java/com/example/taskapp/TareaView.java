@@ -3,6 +3,7 @@ package com.example.taskapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,6 +65,7 @@ public class TareaView extends AppCompatActivity {
         userLogin = findViewById(R.id.userLogin);
         userDate = findViewById(R.id.userDate);
 
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user != null) {
@@ -86,6 +88,7 @@ public class TareaView extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String fechaActual = dateFormat.format(new Date());
         userDate.setText("Fecha: " + fechaActual);
+
 
         ImageButton btnBack = findViewById(R.id.btnBack);
         Button btnNuevaTarea = findViewById(R.id.btnNuevaTarea);
