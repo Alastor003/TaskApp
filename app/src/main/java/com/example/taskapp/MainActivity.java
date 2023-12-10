@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -143,9 +144,7 @@ public class MainActivity extends AppCompatActivity {
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             //Asynk Task
-            GetClima getClima = new GetClima();
-            //Api con Lat y Lon ArgentinaBuenosAires.
-            getClima.execute("https://api.openweathermap.org/data/2.5/weather?lat=-34.6118&lon=-58.4173&appid=3842f0c5a972487dfec9c3306184e87b"); //Link de la api.
+
             //getClima.execute("https://rickandmortyapi.com/api/character"); //Link de la api.
 
             noInternetConnection.setVisibility(View.INVISIBLE);
