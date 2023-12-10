@@ -146,6 +146,8 @@ public class MainActivity extends AppCompatActivity {
             GetClima getClima = new GetClima();
             //Api con Lat y Lon ArgentinaBuenosAires.
             getClima.execute("https://api.openweathermap.org/data/2.5/weather?lat=-34.6118&lon=-58.4173&appid=3842f0c5a972487dfec9c3306184e87b"); //Link de la api.
+            //getClima.execute("https://rickandmortyapi.com/api/character"); //Link de la api.
+
             noInternetConnection.setVisibility(View.INVISIBLE);
 
         } else {
