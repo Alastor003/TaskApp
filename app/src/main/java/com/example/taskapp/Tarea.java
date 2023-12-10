@@ -1,6 +1,15 @@
 package com.example.taskapp;
 
+import android.os.Bundle;
+import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.firestore.ServerTimestamp;
+
+import org.w3c.dom.Text;
+
 import java.util.Date;
 
 public class Tarea {

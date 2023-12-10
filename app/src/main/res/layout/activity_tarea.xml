@@ -60,11 +60,19 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listaTareas"
             android:layout_width="match_parent"
-            android:layout_height="490dp"
+            android:layout_height="435dp"
             app:layout_constraintBottom_toTopOf="@+id/btnNuevaTarea"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/misTareas" />
+
+        <EditText
+            android:id="@+id/edtClima"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Name" />
     </LinearLayout>
 
     <!-- Botón "Nueva Tarea" -->

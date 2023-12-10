@@ -5,12 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.media.Image;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        checkConnection();
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -115,8 +120,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public  void  download(View v)
-    {
+    public void download(View v) {
         ImageView imageView = findViewById(R.id.imageView);
         if (imageView.getVisibility() == View.INVISIBLE) {
             imageView.setVisibility(View.VISIBLE);
@@ -125,5 +129,30 @@ public class MainActivity extends AppCompatActivity {
         }
         ImageDownloader descarga = new ImageDownloader(imageView);
         descarga.execute("https://scontent.fepa2-1.fna.fbcdn.net/v/t39.30808-6/405251742_7673753482641159_1720167608337291579_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=3635dc&_nc_ohc=lAk3tujHHJsAX-buVqX&_nc_ht=scontent.fepa2-1.fna&cb_e2o_trans=t&oh=00_AfAVcX33uj07QQCdZ86SH9nAaQd8_Wcn6wFmCTFmvvaN6A&oe=656BB993");
+    }
+
+    public void checkConnection(View view) {
+        checkConnection();
+    }
+
+    //Conexión y verificación de internet.
+    public void checkConnection() {
+        LinearLayout noInternetConnection = findViewById(R.id.noConnectionLayout);
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            //Asynk Task
+            GetClima getClima = new GetClima();
+            //Api con Lat y Lon ArgentinaBuenosAires.
+            getClima.execute("https://api.openweathermap.org/data/2.5/weather?lat=-34.6118&lon=-58.4173&appid=3842f0c5a972487dfec9c3306184e87b"); //Link de la api.
+            //getClima.execute("https://rickandmortyapi.com/api/character"); //Link de la api.
+
+            noInternetConnection.setVisibility(View.INVISIBLE);
+
+        } else {
+            noInternetConnection.setVisibility(View.VISIBLE);
+        }
+
     }
 }
