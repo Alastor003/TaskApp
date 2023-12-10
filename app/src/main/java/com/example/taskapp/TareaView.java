@@ -107,6 +107,10 @@ public class TareaView extends AppCompatActivity {
             Intent intent = new Intent(TareaView.this, CrearTarea.class);
             startActivityForResult(intent, CREAR_TAREA_REQUEST);
         });
+
+        GetClima getClima = new GetClima((TextView) findViewById(R.id.edtClima));
+        //Api con Lat y Lon ArgentinaBuenosAires.
+        getClima.execute("https://api.openweathermap.org/data/2.5/weather?lat=-34.6118&lon=-58.4173&appid=3842f0c5a972487dfec9c3306184e87b"); //Link de la api.
     }
 
     @Override

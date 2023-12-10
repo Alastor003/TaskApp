@@ -2,7 +2,7 @@ package com.example.taskapp;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.EditText;
+import android.widget.TextView;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,7 +11,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -39,6 +38,12 @@ class Data {
 
 public class GetClima extends AsyncTask<String, Integer, String> {
     OkHttpClient client = new OkHttpClient();
+    private TextView textView; // Nueva variable para el TextView
+
+    // Constructor que acepta un TextView
+    public GetClima(TextView textView) {
+        this.textView = textView;
+    }
 
     String run(String url) throws IOException {
         Request request = new Request.Builder()
@@ -65,15 +70,12 @@ public class GetClima extends AsyncTask<String, Integer, String> {
             String pais = respuesta.sys.country;
             double temperaturaKelvin = respuesta.main.temp;
 
-            //response = respuesta.sys.country;
-
-        } catch (IOException e) //| JSONException
-        {
+        } catch (IOException e) {
             throw new RuntimeException(e);
-
         }
         return response;
     }
+
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
@@ -89,17 +91,15 @@ public class GetClima extends AsyncTask<String, Integer, String> {
             String pais = sysObject.getString("country");
             String resultado = "Temperatura actual en " + pais + " es de " + tempCelcius + "°C.";
 
-
-            //EditText e = ((Tarea) context).findViewById(R.id.edtClima);
-            //e.setText(resultado);
-
+            // Actualizar el TextView con el resultado
+            if (textView != null) {
+                textView.setText(resultado);
+            }
 
             Log.i("Resultado API Clima", resultado);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 }
-
