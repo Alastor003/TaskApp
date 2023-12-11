@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,6 +26,7 @@ public class Registro extends AppCompatActivity {
     private static final String TAG = "RegistroActivity";
 
     EditText edtNombre, edtUsuario, edtEmail, edtContrasenia;
+    ImageButton btnVolver;
     Button btnRegistrar;
     FirebaseAuth mAuth;
     FirebaseFirestore db;
@@ -43,7 +45,16 @@ public class Registro extends AppCompatActivity {
         edtEmail = findViewById(R.id.edtEmail);
         edtContrasenia = findViewById(R.id.edtContrasenia);
         btnRegistrar = findViewById(R.id.btnRegistrar);
+        btnVolver = findViewById(R.id.btnBack);
 
+        btnVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Registro.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
