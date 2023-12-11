@@ -3,12 +3,10 @@ package com.example.taskapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -90,7 +88,7 @@ public class TareaView extends AppCompatActivity {
         userDate.setText("Fecha: " + fechaActual);
 
 
-        ImageButton btnBack = findViewById(R.id.btnBack);
+        ImageButton btnBack = findViewById(R.id.btnVolver);
         Button btnNuevaTarea = findViewById(R.id.btnNuevaTarea);
 
         btnBack.setOnClickListener(view -> {
