@@ -44,6 +44,7 @@ public class Registro extends AppCompatActivity {
         edtContrasenia = findViewById(R.id.edtContrasenia);
         btnRegistrar = findViewById(R.id.btnRegistrar);
 
+
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

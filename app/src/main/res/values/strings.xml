@@ -5,7 +5,7 @@
     <string name="pass">Ingrese su Contraseña</string>
     <string name="iniciar">Iniciar Sesión</string>
     <string name="registrarse">Registrarse</string>
-    <string name="btnDescargar">Descargar Instructivo</string>
+    <string name="btnDescargar">Ver Instructivo</string>
     <string name="tvRegistro">Completar los Campos:</string>
     <string name="tvNombre">Nombre:</string>
     <string name="tvUsuario">Usuario:</string>
@@ -20,7 +20,7 @@
     <string name="edtContraseniaHide">Ingresa tu Contraseña:</string>
     <string name="edtDescripcion">Explique su tarea...</string>
     <string name="edtTitle">Título</string>
-    <string name="edtConecFallida">Falló la Conexión. Intente más tarde...</string>
+    <string name="edtConecFallida">Falló la conexión, por favor intente más tarde...</string>
     <string name="btnRegistrarme">Registrarme</string>
     <string name="btnCancelar">Cancelar</string>
     <string name="btnAniadir">+Crear Tarea</string>
