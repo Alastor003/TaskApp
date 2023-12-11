@@ -1,11 +1,13 @@
 package com.example.taskapp;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -30,7 +32,7 @@ public class TareaAdapter extends FirestoreRecyclerAdapter<Tarea, TareaAdapter.T
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull TareaViewHolder holder, int position, @NonNull Tarea tarea) {
+    protected void onBindViewHolder(@NonNull TareaViewHolder holder, @SuppressLint("RecyclerView") int position, @NonNull Tarea tarea) {
         holder.bind(tarea);
 
         holder.btnEliminarTarea.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +46,7 @@ public class TareaAdapter extends FirestoreRecyclerAdapter<Tarea, TareaAdapter.T
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 // Si el usuario hace clic en "Sí", eliminar la tarea
                                 eliminarTarea(position);
+                                Toast.makeText(view.getContext(), "Tarea eliminada con éxito", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
